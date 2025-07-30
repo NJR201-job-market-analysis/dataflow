@@ -5,7 +5,7 @@ services:
   initdb:
     image: ${DOCKER_IMAGE_USERNAME}/jobmarket-dataflow:${DOCKER_IMAGE_VERSION}  # 使用指定版本的自定義映像
     command: pipenv run airflow db init  # 初始化 Airflow 的 metadata DB
-    restart: on-failure  # 若失敗則自動重啟
+    # restart: on-failure  # 若失敗則自動重啟
     deploy:
       mode: replicated  # 使用 swarm replicated 模式
       replicas: 1  # 執行一個副本
@@ -20,7 +20,7 @@ services:
     command: pipenv run airflow users create --username admin --firstname lin --lastname sam --role Admin -p admin --email finmind.tw@gmail.com  # 建立管理者帳號
     depends_on:
       - initdb  # 等待 initdb 完成後再執行
-    restart: on-failure  # 失敗自動重啟
+    # restart: on-failure  # 失敗自動重啟
     deploy:
       mode: replicated
       replicas: 1
@@ -29,9 +29,8 @@ services:
     networks:
       - jobmarket-swarm-network
 
-
   redis:
-    image: 'bitnami/redis:5.0'
+    image: 'bitnami/redis:latest'
     ports:
         - 6379:6379
     volumes:
@@ -122,30 +121,11 @@ services:
       mode: replicated
       replicas: 1
       placement:
-        constraints: [node.labels.worker == true]
-    networks:
-        - jobmarket-swarm-network
-
-  crawler_twse:
-    image: ${DOCKER_IMAGE_USERNAME}/jobmarket-dataflow:${DOCKER_IMAGE_VERSION}
-    hostname: "{{.Service.Name}}.{{.Task.Slot}}"
-    restart: always
-    # 將容器內的 docker 與容器外的 docker 做連結
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-    depends_on:
-      - scheduler
-    command: pipenv run airflow celery worker -q twse
-    # swarm 設定
-    deploy:
-      mode: replicated
-      replicas: 1
-      placement:
         constraints: [node.labels.airflow == true]
     networks:
         - jobmarket-swarm-network
 
-  crawler_tpex:
+  crawler-queue:
     image: ${DOCKER_IMAGE_USERNAME}/jobmarket-dataflow:${DOCKER_IMAGE_VERSION}
     hostname: "{{.Service.Name}}.{{.Task.Slot}}"
     restart: always
@@ -154,7 +134,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     depends_on:
       - scheduler
-    command: pipenv run airflow celery worker -q tpex
+    command: pipenv run airflow celery worker -q crawler-queue
     # swarm 設定
     deploy:
       mode: replicated
