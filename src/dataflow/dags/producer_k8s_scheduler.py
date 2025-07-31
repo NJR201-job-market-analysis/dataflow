@@ -12,7 +12,7 @@ from dataflow.constant import (
 # 匯入自定義的 DockerOperator 任務建立函式
 from dataflow.etl.producer_k8s import (
     # 建立並回傳一個 DockerOperator 任務
-    create_producer_task,
+    create_producer_cake_task,
 )
 
 # 定義 DAG，並用 with 語法將任務放入 DAG 環境中
@@ -29,4 +29,4 @@ with airflow.DAG(
     catchup=False,
 ) as dag:
     # 建立並註冊 DockerOperator 任務到 DAG
-    create_producer_task()
+    create_producer_cake_task()
