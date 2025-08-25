@@ -6,12 +6,12 @@ from dataflow.constant import DOCKER_IMAGE, DOCKER_NETWORK_MODE
 
 
 # 建立一個 DockerOperator 任務的函式，回傳一個 Airflow 的任務實例
-def create_producer_cake_task() -> DockerOperator:
+def create_producer_yourator_task() -> DockerOperator:
     return DockerOperator(
         # 設定這個 task 在 DAG 中的名稱（唯一識別碼）
-        task_id="producer_cake",
+        task_id="producer_yourator",
         image=DOCKER_IMAGE,
-        command="pipenv run python -m crawlers.cake.producer",
+        command="pipenv run python -m crawlers.yourator.producer",
         # 每次執行前都強制重新拉取最新的 image（確保使用最新版本）
         force_pull=True,
         # 容器執行完畢後自動刪除（避免堆積殘留容器）

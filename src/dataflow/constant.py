@@ -3,7 +3,7 @@ import datetime  # 匯入 datetime 模組，用來設定時間參數
 # 預設參數，會套用在 DAG 與 Task 中
 DEFAULT_ARGS = {
     # DAG/Task 的負責人，顯示在 Airflow UI 中
-    "owner": "FinMind",
+    "owner": "admin",
     # 若任務失敗，最多重試 1 次
     "retries": 1,
     # 每次重試間隔 1 分鐘
@@ -18,3 +18,7 @@ DEFAULT_ARGS = {
 
 # 限制此 DAG 同時最多只能執行一個 run（防止排程或手動重疊執行）
 MAX_ACTIVE_RUNS = 1
+
+DOCKER_IMAGE = "iyauta/jobmarket-crawler:0.0.11"
+K8S_IMAGE = "iyauta/jobmarket-crawler:0.0.3.composer"
+DOCKER_NETWORK_MODE = "jobmarket-swarm-network"

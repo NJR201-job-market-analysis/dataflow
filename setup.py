@@ -10,7 +10,7 @@ with open(os.path.join(here, "README.md"), encoding="utf-8") as f:
 setup(
     name="dataflow",  # Required
     version="0.0.1",  # Required
-    description="test",  # Optional
+    description="jobmarket data flow powered by airflow",  # Optional
     long_description=long_description,  # Optional
     long_description_content_type="text/markdown",  # Optional (see note above)
     classifiers=[  # Optional
