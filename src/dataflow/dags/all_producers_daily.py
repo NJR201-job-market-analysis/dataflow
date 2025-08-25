@@ -11,7 +11,7 @@ from dataflow.etl.producer_yourator import create_producer_yourator_task
 with airflow.DAG(
     dag_id="all_producers_daily",
     default_args=DEFAULT_ARGS,
-    schedule_interval="@daily",
+    schedule_interval=None,
     max_active_runs=MAX_ACTIVE_RUNS,
     catchup=False,
     doc_md="Runs all crawler producers sequentially.",
