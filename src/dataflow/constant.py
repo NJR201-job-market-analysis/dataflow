@@ -10,8 +10,8 @@ DEFAULT_ARGS = {
     "retry_delay": datetime.timedelta(minutes=1),
     # DAG 開始生效的時間
     "start_date": datetime.datetime(2022, 1, 1),
-    # 單一 task 最長可執行 60 分鐘，超時則視為失敗
-    "execution_timeout": datetime.timedelta(minutes=60),
+    # 單一 task 最長可執行 600 分鐘，超時則視為失敗
+    "execution_timeout": datetime.timedelta(minutes=600),
     # 限制 DAG 同時最多執行 10 個 task
     "concurrency": 10,
 }

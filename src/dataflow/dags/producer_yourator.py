@@ -31,4 +31,4 @@ with airflow.DAG(
     tags=["crawler", "producer", "yourator"],
 ) as dag:
     # 建立並註冊 DockerOperator 任務到 DAG
-    create_producer_yourator_task
+    create_producer_yourator_task()
