@@ -3,10 +3,10 @@ from airflow.providers.cncf.kubernetes.operators.pod import KubernetesPodOperato
 from dataflow.constant import K8S_IMAGE
 
 # 建立一個 DockerOperator 任務的函式，回傳一個 Airflow 的任務實例
-def create_producer_cake_task() -> KubernetesPodOperator:
+def create_producer_cake_k8s_task() -> KubernetesPodOperator:
     return KubernetesPodOperator(
-        task_id="producer_cake_crawler",
-        name="producer-cake-crawler",
+        task_id="producer_cake_k8s_crawler",
+        name="producer_cake_k8s_crawler",
         namespace="default",
         image=K8S_IMAGE,
         image_pull_policy='Always',  # 👈 強制每次都拉
